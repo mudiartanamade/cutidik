@@ -1,0 +1,98 @@
+[18-Dec-2025 12:56:41 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:41 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:41 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:41 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:49 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:49 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:49 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:49 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:50 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:50 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:50 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:50 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:51 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:51 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:51 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:51 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:51 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:51 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:56:51 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:56:51 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:22 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:22 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:22 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:22 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:23 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:23 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:23 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:23 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:23 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:23 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:23 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:23 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:24 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:24 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:24 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:24 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:25 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:25 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:25 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:25 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:28 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:28 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:28 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:28 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:29 UTC] PHP Warning:  include(config/database.php): Failed to open stream: No such file or directory in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:29 UTC] PHP Warning:  include(): Failed opening 'config/database.php' for inclusion (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 3
+[18-Dec-2025 12:57:29 UTC] PHP Warning:  Undefined variable $conn in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42
+[18-Dec-2025 12:57:29 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php:42
+Stack trace:
+#0 {main}
+  thrown in /home/aioaomjk/cuti.disdikporadps.id/views/export_pengajuan.php on line 42

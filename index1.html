@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Cuti Disdikpora Kota Denpasar</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for Infographics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- QRCode JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky blue for Denpasar feel
+                            600: '#0284c7',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Print Styles for Surat Cuti */
+        @media print {
+            body * { visibility: hidden; }
+            #print-area, #print-area * { visibility: visible; }
+            #print-area { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; }
+            @page { margin: 2cm; size: A4; }
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white">
+
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="bg-brand-900 text-white w-64 flex-shrink-0 flex flex-col transition-transform transform -translate-x-full md:translate-x-0 fixed md:relative z-50 h-full shadow-2xl">
+        <div class="p-6 flex items-center gap-3 border-b border-brand-800">
+            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-brand-900 font-bold text-xl shadow-lg">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-wide">E-CUTI</h1>
+                <p class="text-xs text-brand-200">Disdikpora Denpasar</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4 space-y-1 px-3">
+            <div id="nav-items">
+                <!-- Nav items injected by JS based on Role -->
+            </div>
+        </nav>
+
+        <div class="p-4 border-t border-brand-800">
+            <div class="flex items-center gap-3 mb-4">
+                <img src="https://ui-avatars.com/api/?name=Admin&background=random" class="w-10 h-10 rounded-full border-2 border-brand-500">
+                <div>
+                    <p class="text-sm font-semibold" id="user-name">User</p>
+                    <p class="text-xs text-brand-300" id="user-role">Role</p>
+                </div>
+            </div>
+            <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50 relative">
+        
+        <!-- Top Header -->
+        <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-4 md:px-8 shadow-sm z-30">
+            <button class="md:hidden text-slate-500 hover:text-brand-600 transition" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
+            <h2 class="text-lg font-semibold text-slate-700 hidden md:block" id="page-title">Dashboard</h2>
+
+            <div class="flex items-center gap-4">
+                <!-- Notification Bell -->
+                <div class="relative cursor-pointer" onclick="toggleNotif()">
+                    <i class="fa-regular fa-bell text-slate-500 text-xl hover:text-brand-600 transition"></i>
+                    <span id="notif-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                    
+                    <!-- Notif Dropdown -->
+                    <div id="notif-dropdown" class="absolute right-0 mt-3 w-80 bg-white rounded-xl shadow-2xl border border-slate-100 hidden overflow-hidden z-50 origin-top-right transition-all">
+                        <div class="p-3 border-b border-slate-100 bg-slate-50 font-semibold text-sm">Notifikasi</div>
+                        <div id="notif-list" class="max-h-64 overflow-y-auto">
+                            <!-- Items -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <div id="content-area" class="flex-1 overflow-auto p-4 md:p-8 scroll-smooth">
+            <!-- Content injected by JS -->
+        </div>
+
+    </main>
+
+    <!-- Modal Form Template -->
+    <div id="modal" class="fixed inset-0 z-[60] hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all scale-100" id="modal-content">
+                <!-- Modal Body -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Print Area (Official Letter) -->
+    <div id="print-area" class="hidden bg-white p-12 text-black font-serif">
+        <!-- Official Letter Structure -->
+    </div>
+
+    <script>
+        // --- SIMULATED DATABASE & STATE ---
+        
+        const currentUser = {
+            role: 'admin_sekolah', // 'admin_sekolah' or 'admin_dinas'
+            name: 'Wayan Admin SMP 1',
+            school: 'SMP Negeri 1 Denpasar',
+            level: 'SMP'
+        };
+
+        // Dummy Data
+        let db = {
+            stats: {
+                total_guru: 1250,
+                sedang_cuti: 12,
+                sisa_cuti_avg: 10
+            },
+            employees: [
+                { id: '19850101', name: 'I Made Guru', nip: '198501012010011001', type: 'PNS', rank: 'Penata Muda (III/a)', school: 'SMP Negeri 1 Denpasar', level: 'SMP', quota: 12, used: 2 },
+                { id: '19900202', name: 'Ni Putu Guru', nip: '199002022019032005', type: 'P3K', rank: 'Ahli Pertama', school: 'SD Negeri 4 Denpasar', level: 'SD', quota: 12, used: 0 },
+                { id: '19950303', name: 'Ketut Tenaga', nip: '199503032020011002', type: 'PNS', rank: 'Pengatur (II/c)', school: 'TK Negeri Pembina', level: 'TK', quota: 12, used: 5 },
+            ],
+            leaves: [
+                { id: 101, emp_id: '19850101', type: 'Cuti Tahunan', start: '2023-10-01', end: '2023-10-03', duration: 3, reason: 'Upacara Adat', status: 'approved', date_req: '2023-09-25' },
+            ],
+            notifications: []
+        };
+
+        // Initialize LocalStorage if empty
+        if(!localStorage.getItem('ecuti_db')) {
+            localStorage.setItem('ecuti_db', JSON.stringify(db));
+        } else {
+            db = JSON.parse(localStorage.getItem('ecuti_db'));
+        }
+
+        // --- CORE LOGIC ---
+
+        function saveDb() {
+            localStorage.setItem('ecuti_db', JSON.stringify(db));
+            renderNotifications();
+        }
+
+        function switchRole(role) {
+            currentUser.role = role;
+            currentUser.name = role === 'admin_dinas' ? 'Dr. Admin Dinas' : 'Wayan Admin SMP 1';
+            currentUser.school = role === 'admin_dinas' ? 'Disdikpora Denpasar' : 'SMP Negeri 1 Denpasar';
+            
+            // Reload UI
+            initUI();
+            
+            // Simulating a fresh login
+            const notifText = role === 'admin_dinas' ? 'Selamat Datang Admin Dinas' : 'Selamat Datang Admin Sekolah';
+            addNotification(notifText, 'info');
+        }
+
+        function addNotification(msg, type='info') {
+            db.notifications.unshift({ msg, type, time: new Date().toLocaleTimeString(), read: false });
+            saveDb();
+        }
+
+        function logout() {
+            if(confirm('Keluar dari sistem?')) {
+                // For demo, just toggle role logic or reload
+                const newRole = currentUser.role === 'admin_sekolah' ? 'admin_dinas' : 'admin_sekolah';
+                switchRole(newRole);
+            }
+        }
+
+        // --- RENDER FUNCTIONS ---
+
+        function initUI() {
+            document.getElementById('user-name').innerText = currentUser.name;
+            document.getElementById('user-role').innerText = currentUser.school;
+            renderSidebar();
+            renderDashboard();
+            renderNotifications();
+        }
+
+        function renderSidebar() {
+            const nav = document.getElementById('nav-items');
+            nav.innerHTML = '';
+
+            const items = currentUser.role === 'admin_sekolah' 
+            ? [
+                { icon: 'fa-chart-pie', label: 'Dashboard', onclick: 'renderDashboard()' },
+                { icon: 'fa-users', label: 'Pegawai & Guru', onclick: 'renderEmployees()' },
+                { icon: 'fa-paper-plane', label: 'Ajukan Cuti', onclick: 'renderLeaveForm()' },
+                { icon: 'fa-clock-rotate-left', label: 'Riwayat Cuti', onclick: 'renderHistory()' },
+            ] 
+            : [
+                { icon: 'fa-chart-line', label: 'Dashboard Dinas', onclick: 'renderDashboard()' },
+                { icon: 'fa-list-check', label: 'Persetujuan Cuti', onclick: 'renderApproval()' },
+                { icon: 'fa-database', label: 'Data Seluruh Pegawai', onclick: 'renderEmployees()' },
+                { icon: 'fa-file-export', label: 'Laporan Rekap', onclick: 'renderReports()' },
+            ];
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'group flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-brand-100 hover:bg-brand-800 hover:text-white transition-all mb-1';
+                div.innerHTML = `<i class="fa-solid ${item.icon} w-6 text-center"></i> <span class="text-sm font-medium">${item.label}</span>`;
+                div.onclick = () => {
+                    // Active state handling
+                    document.querySelectorAll('#nav-items > div').forEach(el => el.classList.remove('bg-brand-800', 'text-white'));
+                    div.classList.add('bg-brand-800', 'text-white');
+                    eval(item.onclick);
+                    if(window.innerWidth < 768) toggleSidebar();
+                };
+                nav.appendChild(div);
+            });
+            
+            // Set first item active
+            nav.children[0].classList.add('bg-brand-800', 'text-white');
+        }
+
+        function renderDashboard() {
+            const container = document.getElementById('content-area');
+            document.getElementById('page-title').innerText = 'Dashboard Overview';
+
+            // Filter logic
+            const myLeaves = db.leaves.filter(l => currentUser.role === 'admin_dinas' ? true : getEmp(l.emp_id).school === currentUser.school);
+            const pending = myLeaves.filter(l => l.status === 'pending').length;
+            const approved = myLeaves.filter(l => l.status === 'approved').length;
+            
+            // HTML
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Stat Cards -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-users"></i></div>
+                        <div>
+                            <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Total Pegawai</p>
+                            <h3 class="text-2xl font-bold text-slate-800">${currentUser.role === 'admin_dinas' ? db.employees.length : db.employees.filter(e => e.school === currentUser.school).length}</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 rounded-full bg-yellow-50 text-yellow-600 flex items-center justify-center text-xl"><i class="fa-solid fa-hourglass-half"></i></div>
+                        <div>
+                            <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Menunggu Persetujuan</p>
+                            <h3 class="text-2xl font-bold text-slate-800">${pending}</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-xl"><i class="fa-solid fa-check-circle"></i></div>
+                        <div>
+                            <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Cuti Berjalan</p>
+                            <h3 class="text-2xl font-bold text-slate-800">${approved}</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-brand-600 to-brand-800 p-6 rounded-2xl shadow-lg text-white flex flex-col justify-between">
+                        <div>
+                            <p class="text-brand-100 text-xs font-medium uppercase tracking-wider">Mode Akses</p>
+                            <h3 class="text-lg font-bold">${currentUser.role === 'admin_dinas' ? 'Administrator Dinas' : 'Operator Sekolah'}</h3>
+                        </div>
+                        <button onclick="switchRole('${currentUser.role === 'admin_sekolah' ? 'admin_dinas' : 'admin_sekolah'}')" class="mt-2 text-xs bg-white/20 hover:bg-white/30 py-1.5 px-3 rounded text-center transition">
+                            Switch Role (Demo)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Chart Section -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 lg:col-span-2">
+                        <h3 class="font-bold text-slate-700 mb-4">Statistik Pengajuan Cuti (Bulanan)</h3>
+                        <div class="h-64">
+                            <canvas id="chartStats"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Quick Activity -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h3 class="font-bold text-slate-700 mb-4">Aktivitas Terbaru</h3>
+                        <div class="space-y-4">
+                            ${myLeaves.slice(0, 4).map(l => {
+                                const emp = getEmp(l.emp_id);
+                                let statusColor = l.status === 'approved' ? 'text-green-600 bg-green-50' : (l.status === 'rejected' ? 'text-red-600 bg-red-50' : 'text-yellow-600 bg-yellow-50');
+                                return `
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 text-xs">
+                                        ${emp.name.charAt(0)}
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-slate-800">${emp.name}</p>
+                                        <p class="text-xs text-slate-500">${l.type} - ${l.duration} Hari</p>
+                                    </div>
+                                    <span class="text-[10px] font-bold px-2 py-1 rounded-full ${statusColor}">${l.status.toUpperCase()}</span>
+                                </div>
+                                `;
+                            }).join('')}
+                            ${myLeaves.length === 0 ? '<p class="text-sm text-slate-400 italic">Belum ada data cuti.</p>' : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Initialize Chart
+            initChart();
+        }
+
+        function renderEmployees() {
+            const container = document.getElementById('content-area');
+            document.getElementById('page-title').innerText = 'Data Pegawai';
+
+            // Filter employees based on role
+            const employees = currentUser.role === 'admin_dinas' 
+                ? db.employees 
+                : db.employees.filter(e => e.school === currentUser.school);
+
+            let html = `
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+                        <h3 class="font-bold text-slate-700">Daftar Guru & Pegawai</h3>
+                        ${currentUser.role === 'admin_sekolah' ? `<button class="bg-brand-600 hover:bg-brand-700 text-white text-sm px-4 py-2 rounded-lg"><i class="fa-solid fa-plus mr-2"></i>Tambah Pegawai</button>` : ''}
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-slate-600">
+                            <thead class="text-xs text-slate-500 uppercase bg-slate-50">
+                                <tr>
+                                    <th class="px-6 py-3">Nama / NIP</th>
+                                    <th class="px-6 py-3">Jabatan / Gol</th>
+                                    <th class="px-6 py-3">Unit Kerja</th>
+                                    <th class="px-6 py-3 text-center">Sisa Cuti</th>
+                                    <th class="px-6 py-3 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+
+            employees.forEach(e => {
+                html += `
+                    <tr class="bg-white border-b hover:bg-slate-50 transition">
+                        <td class="px-6 py-4 font-medium text-slate-900">
+                            <div>${e.name}</div>
+                            <div class="text-xs text-slate-500">${e.nip}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div>${e.type}</div>
+                            <div class="text-xs text-slate-500">${e.rank}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 py-1 bg-brand-50 text-brand-600 rounded text-xs font-semibold">${e.level}</span>
+                            <span class="text-xs ml-1">${e.school}</span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <div class="inline-flex items-center justify-center w-8 h-8 rounded-full ${e.quota - e.used < 5 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'} font-bold">
+                                ${e.quota - e.used}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <button class="text-brand-600 hover:text-brand-800 mr-2"><i class="fa-regular fa-eye"></i></button>
+                            ${currentUser.role === 'admin_sekolah' ? `<button onclick="renderLeaveForm('${e.id}')" class="text-brand-600 hover:text-brand-800 tooltip" title="Ajukan Cuti"><i class="fa-solid fa-file-pen"></i></button>` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table></div></div>`;
+            container.innerHTML = html;
+        }
+
+        function renderLeaveForm(preselectId = '') {
+            const employees = db.employees.filter(e => e.school === currentUser.school);
+            
+            const modal = document.getElementById('modal-content');
+            modal.innerHTML = `
+                <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-brand-600 text-white rounded-t-2xl">
+                    <h3 class="font-bold text-lg"><i class="fa-solid fa-paper-plane mr-2"></i>Form Pengajuan Cuti</h3>
+                    <button onclick="closeModal()" class="hover:bg-white/20 rounded-full w-8 h-8 flex items-center justify-center transition"><i class="fa-solid fa-times"></i></button>
+                </div>
+                <div class="p-6">
+                    <form id="leaveForm" onsubmit="submitLeave(event)">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Pilih Pegawai</label>
+                                <select name="emp_id" required class="w-full border-slate-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2.5 border">
+                                    <option value="">-- Pilih --</option>
+                                    ${employees.map(e => `<option value="${e.id}" ${e.id === preselectId ? 'selected' : ''}>${e.name} - Sisa: ${e.quota - e.used}</option>`).join('')}
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Jenis Cuti</label>
+                                <select name="type" class="w-full border-slate-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2.5 border">
+                                    <option value="Cuti Tahunan">Cuti Tahunan</option>
+                                    <option value="Cuti Sakit">Cuti Sakit</option>
+                                    <option value="Cuti Besar">Cuti Besar</option>
+                                    <option value="Cuti Melahirkan">Cuti Melahirkan</option>
+                                    <option value="Cuti Alasan Penting">Cuti Alasan Penting</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Alasan</label>
+                                <input type="text" name="reason" required class="w-full border-slate-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2.5 border" placeholder="Contoh: Upacara Adat">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Mulai</label>
+                                <input type="date" name="start" required class="w-full border-slate-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2.5 border">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Selesai</label>
+                                <input type="date" name="end" required class="w-full border-slate-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2.5 border">
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 text-blue-800 p-3 rounded-lg text-xs mb-6 flex items-start gap-2">
+                            <i class="fa-solid fa-info-circle mt-0.5"></i>
+                            <p>Pastikan sisa kuota cuti mencukupi. Pengajuan akan diteruskan ke Admin Dinas untuk verifikasi.</p>
+                        </div>
+
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="closeModal()" class="px-5 py-2.5 text-sm font-medium text-slate-600 bg-slate-100 rounded-lg hover:bg-slate-200 transition">Batal</button>
+                            <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-brand-600 rounded-lg hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition">Ajukan Cuti</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            openModal();
+        }
+
+        function renderApproval() {
+            const container = document.getElementById('content-area');
+            document.getElementById('page-title').innerText = 'Persetujuan Cuti (Dinas)';
+
+            // Get pending requests
+            const requests = db.leaves.filter(l => l.status === 'pending');
+
+            let html = `
+                <div class="space-y-4">
+            `;
+            
+            if(requests.length === 0) {
+                html += `<div class="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300">
+                    <i class="fa-regular fa-folder-open text-4xl text-slate-300 mb-3"></i>
+                    <p class="text-slate-500">Tidak ada pengajuan cuti yang menunggu persetujuan.</p>
+                </div>`;
+            } else {
+                requests.forEach(req => {
+                    const emp = getEmp(req.emp_id);
+                    html += `
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-lg">
+                                    ${emp.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <h4 class="font-bold text-slate-800">${emp.name}</h4>
+                                        <span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-600 rounded border border-slate-200">${emp.school}</span>
+                                    </div>
+                                    <p class="text-sm text-slate-500 mt-1"><span class="font-medium text-slate-700">${req.type}</span> selama ${req.duration} hari</p>
+                                    <p class="text-xs text-slate-400 mt-0.5"><i class="fa-regular fa-calendar mr-1"></i> ${req.start} s/d ${req.end} &bull; Alasan: ${req.reason}</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 self-end md:self-center">
+                                <button onclick="processLeave(${req.id}, 'rejected')" class="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition border border-red-100">Tolak</button>
+                                <button onclick="processLeave(${req.id}, 'approved')" class="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition shadow-lg shadow-green-500/30"><i class="fa-solid fa-check mr-1"></i> Setujui</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('content-area');
+            document.getElementById('page-title').innerText = 'Riwayat Pengajuan';
+            
+            // Only show leaves for this school
+            const history = db.leaves.filter(l => {
+                const emp = getEmp(l.emp_id);
+                return emp.school === currentUser.school;
+            }).sort((a,b) => b.id - a.id);
+
+            let html = `
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <table class="w-full text-sm text-left text-slate-600">
+                        <thead class="bg-slate-50 text-xs uppercase text-slate-500">
+                            <tr>
+                                <th class="px-6 py-3">Pegawai</th>
+                                <th class="px-6 py-3">Jenis & Tanggal</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            history.forEach(h => {
+                const emp = getEmp(h.emp_id);
+                let badge = '';
+                if(h.status === 'approved') badge = '<span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">Disetujui</span>';
+                else if(h.status === 'rejected') badge = '<span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold">Ditolak</span>';
+                else badge = '<span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold">Menunggu</span>';
+
+                html += `
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="px-6 py-4 font-medium">${emp.name}</td>
+                        <td class="px-6 py-4">
+                            <div class="text-slate-800 font-medium">${h.type}</div>
+                            <div class="text-xs text-slate-500">${h.start} - ${h.end} (${h.duration} Hari)</div>
+                        </td>
+                        <td class="px-6 py-4">${badge}</td>
+                        <td class="px-6 py-4 text-right">
+                            ${h.status === 'approved' ? `<button onclick="printLetter(${h.id})" class="text-brand-600 hover:underline font-medium text-xs"><i class="fa-solid fa-print mr-1"></i> Cetak SK</button>` : '-'}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table></div>`;
+            container.innerHTML = html;
+        }
+
+        // --- ACTION HANDLERS ---
+
+        function submitLeave(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const start = new Date(formData.get('start'));
+            const end = new Date(formData.get('end'));
+            const diffTime = Math.abs(end - start);
+            const duration = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+            if(duration <= 0) { alert('Tanggal tidak valid'); return; }
+
+            const newLeave = {
+                id: Date.now(),
+                emp_id: formData.get('emp_id'),
+                type: formData.get('type'),
+                reason: formData.get('reason'),
+                start: formData.get('start'),
+                end: formData.get('end'),
+                duration: duration,
+                status: 'pending',
+                date_req: new Date().toISOString().split('T')[0]
+            };
+
+            db.leaves.push(newLeave);
+            addNotification(`Pengajuan cuti baru dari ${getEmp(newLeave.emp_id).school}`, 'info');
+            saveDb();
+            closeModal();
+            renderDashboard(); // Refresh stats
+            
+            // Mock switch to admin dinas hint
+            setTimeout(() => alert('Pengajuan Berhasil! Status: Menunggu Persetujuan Admin Dinas.'), 500);
+        }
+
+        function processLeave(id, status) {
+            const idx = db.leaves.findIndex(l => l.id === id);
+            if(idx > -1) {
+                db.leaves[idx].status = status;
+                
+                // If approved, deduct quota
+                if(status === 'approved') {
+                    const empIdx = db.employees.findIndex(e => e.id === db.leaves[idx].emp_id);
+                    if(empIdx > -1) db.employees[empIdx].used += db.leaves[idx].duration;
+                }
+
+                addNotification(`Cuti untuk ${getEmp(db.leaves[idx].emp_id).name} telah ${status === 'approved' ? 'DISETUJUI' : 'DITOLAK'}`, status === 'approved' ? 'success' : 'error');
+                saveDb();
+                renderApproval();
+            }
+        }
+
+        // --- PRINTING LOGIC (SURAT CUTI) ---
+
+        function printLetter(leaveId) {
+            const leave = db.leaves.find(l => l.id === leaveId);
+            const emp = getEmp(leave.emp_id);
+
+            const printArea = document.getElementById('print-area');
+            
+            // Generate content
+            printArea.innerHTML = `
+                <div style="font-family: 'Times New Roman', serif; line-height: 1.5;">
+                    <!-- KOP SURAT -->
+                    <div style="text-align: center; border-bottom: 3px double black; padding-bottom: 10px; margin-bottom: 20px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Denpasar_City_Emblem.png/178px-Denpasar_City_Emblem.png" style="width: 80px; position: absolute; left: 2cm; top: 2cm;">
+                        <h3 style="margin:0; font-size: 14pt; font-weight: normal;">PEMERINTAH KOTA DENPASAR</h3>
+                        <h2 style="margin:0; font-size: 16pt; font-weight: bold;">DINAS PENDIDIKAN KEPEMUDAAN DAN OLAHRAGA</h2>
+                        <p style="margin:0; font-size: 10pt;">Jalan Mawar No. 1, Denpasar, Bali. Telp: (0361) 123456</p>
+                        <p style="margin:0; font-size: 10pt;">Website: disdikpora.denpasarkota.go.id</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h3 style="text-decoration: underline; margin-bottom: 5px;">SURAT IZIN CUTI</h3>
+                        <p>Nomor: 800 / ${leave.id} / DISDIKPORA / 2025</p>
+                    </div>
+
+                    <p>Diberikan izin cuti kepada Pegawai Negeri Sipil / P3K:</p>
+
+                    <table style="width: 100%; margin-bottom: 20px;">
+                        <tr><td style="width: 150px;">Nama</td><td>: <b>${emp.name}</b></td></tr>
+                        <tr><td>NIP</td><td>: ${emp.nip}</td></tr>
+                        <tr><td>Pangkat/Gol</td><td>: ${emp.rank}</td></tr>
+                        <tr><td>Jabatan</td><td>: Guru / Staf</td></tr>
+                        <tr><td>Unit Kerja</td><td>: ${emp.school}</td></tr>
+                    </table>
+
+                    <p>Untuk menjalankan <b>${leave.type}</b> selama <b>${leave.duration} (terbilang) hari kerja</b>, terhitung mulai tanggal <b>${formatDate(leave.start)}</b> sampai dengan tanggal <b>${formatDate(leave.end)}</b>, dengan ketentuan sebagai berikut:</p>
+                    
+                    <ol style="margin-bottom: 20px;">
+                        <li>Sebelum menjalankan cuti wajib menyerahkan tugas kepada atasan langsung.</li>
+                        <li>Setelah masa cuti berakhir wajib kembali bekerja sebagaimana mestinya.</li>
+                        <li>Alasan cuti: ${leave.reason}</li>
+                    </ol>
+
+                    <p>Demikian surat izin cuti ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p>
+
+                    <div style="float: right; width: 40%; text-align: center; margin-top: 50px;">
+                        <p>Denpasar, ${formatDate(new Date().toISOString().split('T')[0])}</p>
+                        <p>Kepala Dinas Pendidikan Kepemudaan<br>dan Olahraga Kota Denpasar</p>
+                        
+                        <!-- QR Code Area -->
+                        <div id="qrcode-container" style="display:flex; justify-content:center; margin: 20px 0;"></div>
+                        
+                        <p style="font-weight: bold; text-decoration: underline;">Dr. Nama Kepala Dinas, M.Pd</p>
+                        <p>Pembina Utama Muda</p>
+                        <p>NIP. 19700101 199503 1 001</p>
+                    </div>
+                </div>
+            `;
+
+            // Generate QR Code
+            setTimeout(() => {
+                document.getElementById('qrcode-container').innerHTML = "";
+                new QRCode(document.getElementById("qrcode-container"), {
+                    text: `VALIDASI:SK-CUTI-${leave.id}-${emp.nip}-VALID`,
+                    width: 90,
+                    height: 90
+                });
+                
+                // Trigger Print
+                setTimeout(() => window.print(), 500);
+            }, 100);
+        }
+
+        // --- UTILITIES ---
+
+        function getEmp(id) {
+            return db.employees.find(e => e.id == id);
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+            if(sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function toggleNotif() {
+            document.getElementById('notif-dropdown').classList.toggle('hidden');
+        }
+
+        function renderNotifications() {
+            const list = document.getElementById('notif-list');
+            const badge = document.getElementById('notif-badge');
+            const unread = db.notifications.filter(n => !n.read).length;
+            
+            badge.innerText = unread;
+            badge.classList.toggle('hidden', unread === 0);
+
+            list.innerHTML = db.notifications.length === 0 
+                ? '<div class="p-3 text-xs text-center text-slate-400">Tidak ada notifikasi</div>' 
+                : db.notifications.slice(0, 5).map(n => `
+                    <div class="p-3 border-b border-slate-50 hover:bg-slate-50">
+                        <p class="text-xs text-slate-800">${n.msg}</p>
+                        <p class="text-[10px] text-slate-400 mt-1">${n.time}</p>
+                    </div>
+                `).join('');
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('chartStats').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                    datasets: [{
+                        label: 'Jumlah Pengajuan',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: '#0ea5e9',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } }
+                }
+            });
+        }
+
+        // Boot
+        initUI();
+
+    </script>
+</body>
+</html>
